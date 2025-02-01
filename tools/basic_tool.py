@@ -10,21 +10,20 @@ class BasicToolNode:
         self.tools_by_name = {tool.name: tool for tool in tools}
 
     def __call__(self, inputs: dict):
-        #if messages := inputs.get("messages", []):
-            # Get the last message
+        # if messages := inputs.get("messages", []):
+        # Get the last message
         #    message = messages[-1]
-        #else:
+        # else:
         #    raise ValueError("No message found in input")
-        
+
         messages = inputs.get("messages", [])
         if not messages:
             raise ValueError("No hay mensajes para procesar en tool")
-        
+
         last_message = messages[-1] if isinstance(messages, list) else messages
-        #if not hasattr(last_message, "tool_calls"):
+        # if not hasattr(last_message, "tool_calls"):
         #    return{"messages": messages}
-        
-        
+
         outputs = []
         for tool_call in last_message.tool_calls:
             tool_result = self.tools_by_name[tool_call["name"]].invoke(
